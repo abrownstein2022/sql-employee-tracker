@@ -17,8 +17,9 @@
   },
   "homepage": "https://github.com/abrownstein2022/ch12-sql-employee-tracker#readme",
   "dependencies": {
-    "inquirer": "^8.2.4",
     "express": "^4.17.1",
+    "inquirer": "^8.2.4",
+    "mysql": "^2.18.1",
     "mysql2": "^2.2.5",
     "sequelize": "^6.3.5"
   }
