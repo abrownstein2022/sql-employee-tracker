@@ -1,0 +1,25 @@
+{
+  "name": "ch12-sql-employee-tracker",
+  "version": "1.0.0",
+  "description": "Build a command-line application from scratch to manage a company's employee database",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abrownstein2022/ch12-sql-employee-tracker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abrownstein2022/ch12-sql-employee-tracker/issues"
+  },
+  "homepage": "https://github.com/abrownstein2022/ch12-sql-employee-tracker#readme",
+  "dependencies": {
+    "inquirer": "^8.2.4",
+    "express": "^4.17.1",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.3.5"
+  }
+}
