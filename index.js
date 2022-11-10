@@ -2,12 +2,12 @@
 const mysql = require('mysql2');
 const inquirer = require('inquirer');
 //const PORT = process.env.PORT || 3001;
-require('env').config();
+require('dotenv').config();
 //Mike - where does process.env come from?***************************************
 // Connect to database - use .env file values
 const db = mysql.createConnection(
     {
-      host: 'localhost',
+      host: '127.0.0.1',
       user: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME
@@ -25,7 +25,7 @@ function validateInput(message) {
    }
 }
   
-// Create an array of questions for user input
+// main menu for user input
 const menu = [
   {
     type: 'list',
@@ -36,6 +36,28 @@ const menu = [
   } 
   ];
 
+  
+  function runLogicFromMenu(menuoption) {    
+    switch(menuoption){
+      case 'View All Employees':
+      case 'Add Employee': 
+      case 'Add Employee Role':
+      case 'View All Roles':
+      case 'Add Role':
+      case 'View All Departments':
+      case 'Add Department':
+      case 'Update Employee Managers':
+      case 'View Employees By Manager':
+      case 'View Employees By Department':
+      case 'Delete Departments':
+      case 'Delete Roles':
+      case 'Delete Employees':
+      case 'View Total Utilized Budget (Combined Salaries)of a Department':
+      default:  
+    }
+    }
+
+
 // TODO: Create a function to initialize app
 //date.now() means today's date.  Output this way to get unique test file each time.  Will change once project is complete.
 //writeToFile("README" + Date.now() + ".md", generateMarkdown(userInput));
@@ -43,6 +65,7 @@ function init() {
   inquirer.prompt(menu)
   .then(function (userInput) {
       console.log(userInput)
+      runLogicFromMenu(menu);
      // writeToFile("README.md", generateMarkdown(userInput));
   });
 };
