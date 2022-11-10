@@ -3,7 +3,7 @@ const mysql = require('mysql2');
 const inquirer = require('inquirer');
 //const PORT = process.env.PORT || 3001;
 require('env').config();
-
+//Mike - where does process.env come from?***************************************
 // Connect to database - use .env file values
 const db = mysql.createConnection(
     {
@@ -15,4 +15,37 @@ const db = mysql.createConnection(
     console.log(`Connected to the Employee Tracker database.`)
   );
   
+//use one function to validate user input to questions below
+function validateInput(message) {
+  return function(answer) {
+    if (answer.length < 1) {
+        return console.log(`Please enter ${message}!`);
+    }
+    return true;
+   }
+}
   
+// Create an array of questions for user input
+const menu = [
+  {
+    type: 'list',
+    name: 'menuoptions',
+    choices: ['View All Employees', 'Add Employee', 'Add Employee Role', 'View All Roles', 'Add Role','View All Departments','Add Department','Update Employee Managers','View Employees By Manager','View Employees By Department','Delete Departments','Delete Roles','Delete Employees','View Total Utilized Budget (Combined Salaries)of a Department'],
+    default: 'View All Employees',
+    message: 'What would you like to do?',
+  } 
+  ];
+
+// TODO: Create a function to initialize app
+//date.now() means today's date.  Output this way to get unique test file each time.  Will change once project is complete.
+//writeToFile("README" + Date.now() + ".md", generateMarkdown(userInput));
+function init() {
+  inquirer.prompt(menu)
+  .then(function (userInput) {
+      console.log(userInput)
+     // writeToFile("README.md", generateMarkdown(userInput));
+  });
+};
+
+// Function call to initialize app
+init();

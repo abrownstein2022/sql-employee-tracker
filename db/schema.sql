@@ -23,7 +23,7 @@ CREATE TABLE employee(
   role_id INT NOT NULL,
   first_name VARCHAR(30) NOT NULL,
   last_name VARCHAR(30) NOT NULL,
-  manager_id INT,  //can be null from challenge instructions
+  manager_id INT,  /*can be null from challenge instructions*/
   FOREIGN KEY (role_id)
   REFERENCES role(id)
   FOREIGN KEY (manager_id)
