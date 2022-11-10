@@ -1,18 +1,14 @@
-const Sequelize = require('sequelize');
-
 // Enable access to .env variables
 require('dotenv').config();
 
-// Use environment variables to connect to database
-const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
-  {  //127.0.0.1
-    host: 'localhost',
-    dialect: 'mysql',
-    port: 3306
-  }
-);
+const mysql = require('mysql2');
 
-module.exports = sequelize;
+// create the connection to database
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME
+});
+
+module.exports=connection;

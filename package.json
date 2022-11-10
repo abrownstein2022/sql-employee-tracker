@@ -4,7 +4,9 @@
   "description": "Build a command-line application from scratch to manage a company's employee database",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "schema": "dotenv cross-var mysql -u $DB_USER -p$DB_PASSWORD $DB_NAME < ./db/schema.sql",
+    "seeds": "node config/load.js"
   },
   "repository": {
     "type": "git",
@@ -17,10 +19,11 @@
   },
   "homepage": "https://github.com/abrownstein2022/ch12-sql-employee-tracker#readme",
   "dependencies": {
-    "express": "^4.17.1",
+    "cross-var": "^1.1.0",
+    "dotenv": "^16.0.3",
+    "dotenv-cli": "^6.0.0",
     "inquirer": "^8.2.4",
     "mysql": "^2.18.1",
-    "mysql2": "^2.2.5",
-    "sequelize": "^6.3.5"
+    "mysql2": "^2.2.5"
   }
 }

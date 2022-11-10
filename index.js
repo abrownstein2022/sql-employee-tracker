@@ -2,7 +2,7 @@
 const mysql = require('mysql2');
 const inquirer = require('inquirer');
 //const PORT = process.env.PORT || 3001;
-require('.env').config();
+require('env').config();
 
 // Connect to database - use .env file values
 const db = mysql.createConnection(
