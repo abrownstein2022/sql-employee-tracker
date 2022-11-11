@@ -153,13 +153,22 @@ async function addEmployee(){
       console.log(answers);
       //insert into employee table
       //first need to get role id for role(title) selected
-      let roleid = db.query("select id from role where title ='" + answers.role + "'");
-      let empid = db.query("select id from employee where concat(first_name,' ',last_name) ='" + answers.manager + "'");
+      console.log(answers.role);
+      let rolePromise = db.query("select id from role where title ='" + answers.role + "'");
+      let empPromise = db.query("select id from employee where concat(first_name,' ',last_name) ='" + answers.manager + "'");
       console.log(roleid);
       console.log(empid);
+      Promise.all([rolePromise, empPromise]).then(values => {
+        console.log(values);
+        let roleIdValue = values[0][0][0].id;
+        let empIdValue = values[1][0][0].id;
+        let sql = "insert into employee (first_name, last_name, role_id, manager_id) values('" + answers.firstname + "','" + answers.lastname + "'," + roleIdValue + "," + empIdValue;
+        console.log(sql);  
+      }
+        ); 
       //now do insert statement
-      let sql = "insert into employee (first_name, last_name, role_id, manager_id) values('" + answers.firstname + "','" + answers.lastname + "'," + roleid + "," + empid;
-      console.log(sql);
+      //let sql = "insert into employee (first_name, last_name, role_id, manager_id) values('" + answers.firstname + "','" + answers.lastname + "'," + roleid + "," + empid;
+      //console.log(sql);
       //db.query(sql, onQueryComplete);
 
   });
