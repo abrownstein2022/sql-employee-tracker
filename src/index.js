@@ -5,7 +5,7 @@
 import mysql from "mysql2/promise"; //return promise - now all mysql will return promise - make sure everything is waiting if it needs to
 import inquirer from "inquirer";
 //const PORT = process.env.PORT || 3001;
-import dotenv from "dotenv";
+
 import {
   getRoleIdByTitle,
   getEmpIdByName,
@@ -14,23 +14,9 @@ import {
   modifyDbFromQuery,
   getRoles,
   getEmployees,
-  addEmployee,
 } from "./utils.js"; //separated utils into own file
 
-dotenv.config(); //goes with line above
-
-//process. below is an object we can access in JS that is from env
-//can also override env file values for current process only using terminal commands stdout, stdin, stderr
-// Connect to database - use .env file values
-const db = await mysql.createConnection(
-  {
-    host: "127.0.0.1",
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-  },
-  console.log(`Connected to the Employee Tracker database.`)
-);
+import addEmployee from "./addEmp.js";
 
 // main menu for user input
 const menu = [
@@ -40,18 +26,19 @@ const menu = [
     choices: [
       "View All Employees",
       "Add Employee",
-      "Add Employee Role",
+      "Update Employee Role",
       "View All Roles",
       "Add Role",
       "View All Departments",
       "Add Department",
-      "Update Employee Managers",
-      "View Employees By Manager",
-      "View Employees By Department",
-      "Delete Departments",
-      "Delete Roles",
-      "Delete Employees",
       "View Total Utilized Budget (Combined Salaries)of a Department",
+      // "Update Employee Managers",  //Bonus starting here is not required for this assignment - I'll do when I have more time
+      // "View Employees By Manager",
+      // "View Employees By Department",
+      // "Delete Departments",
+      // "Delete Roles",
+      // "Delete Employees",
+
     ],
     default: "View All Employees",
     message: "What would you like to do?",

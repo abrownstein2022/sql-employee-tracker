@@ -1,11 +1,13 @@
   //added "type": "module" to package.json
   //need async in case need to wait to complete something
+  import {getRoles,getRoleIdByTitle,getEmpIdByName,modifyDbFromQuery, validateInput, getEmployees } from "./utils.js";
+  import inquirer from "inquirer";
+
   export async function addEmployee(){
     console.log("adding employee");
   //arrow function below is short-hand if/then/else
   // let rolechoices = db.query("select title from role;",(err, results)=> !err && results);
-    let rolechoices = getRoles();  //get roles from function 
-  
+ 
   //process.exit(); //stops processing
     inquirer.prompt([
       {
@@ -47,7 +49,7 @@
         //first need to get role id for role(title) selected
         //console.log(answers.role);
         //need to handle the promise return.  Use promise all below to get all values at once and set id values after
-          let roleIdValue = await getRoleById(answers.role);
+          let roleIdValue = await getRoleIdByTitle(answers.role);
           let empIdValue = await getEmpIdByName(answers.manager);
           let sql = "insert into employee (first_name, last_name, role_id, manager_id) values('" + answers.firstname + "','" + answers.lastname + "'," + roleIdValue + "," + empIdValue + ")";
           //console.log(sql);  
@@ -57,3 +59,4 @@
   
   }
   
+export default addEmployee;

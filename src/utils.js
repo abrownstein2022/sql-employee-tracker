@@ -1,14 +1,19 @@
 //need to put export before each function in include file so always available to use in other files
+
+import db from "../config/connection.js";
+
 export async function getRoleIdByTitle(title) {
-  return await db.query("select id from role where title ='" + title + "'");
+  let [response] = await db.query("select id from role where title ='" + title + "'");
+  //console.log(response[0].id);
+  //return (await db.query("select id from role where title ='" + title + "'")).id
+   return response[0].id;
 }
 export async function getEmpIdByName(name) {
   //can be used to get mrg id or emp id because employees can be managers and stored in same table
-  return await db.query(
-    "select id from employee where concat(first_name,' ',last_name) ='" +
-      name +
-      "'"
-  );
+  let [response] = await db.query(
+    "select id from employee where concat(first_name,' ',last_name) ='" + name +    "'");
+      console.log(response[0].id);
+       return response[0].id;
 }
 //use one function to validate user input to questions below
 export function validateInput(message) {
@@ -41,28 +46,40 @@ export function validateInput(message) {
 /** hello world
  * @param sqlquery string this is the sql string for the query
  */
-export function renderTableFromQuery(sqlquery){ //passes sql code
-    //need to have this function below inside due to scope
-    function onQueryComplete(err, results) {
-       //guard blocks
-       if (err){console.log("No results found!"); return};  //don't need else or curly brackets here 
-       console.table(results);  //console.table displays the results in a pretty table!
-    }
+// export function renderTableFromQuery(sqlquery){ //passes sql code
+//     //need to have this function below inside due to scope
+//     function onQueryComplete(err, results) {
+//        //guard blocks
+//        if (err){console.log("No results found!"); return};  //don't need else or curly brackets here 
+//        console.table(results);  //console.table displays the results in a pretty table!
+//     }
+//     //need db.query after onQueryComplete so it's already defined before db.query executes
+//     db.query(sqlquery,onQueryComplete);  //db.query invoked by mysql2 - either err or results
+//   };
+
+  //promise must return something so return console.table(results)
+  export async function renderTableFromQuery(sqlquery){ //passes sql code
+    //console.log(sqlquery);
     //need db.query after onQueryComplete so it's already defined before db.query executes
-    db.query(sqlquery,onQueryComplete);  //db.query invoked by mysql2 - either err or results
+    let [results] = await db.query(sqlquery);  //db.query invoked by mysql2 - either err or results
+    //console.log(results);   //return object called results from http - we want to see data value/key inside the object results
+    //if (!results.length){console.log("No results found!"); return};  //don't need else or curly brackets here 
+      return console.table(results);
   };
   
-export function modifyDbFromQuery(sqlquery){
-   function onQueryComplete(err, results){
-      if (err){console.log(err); return};
-      console.log("Database modified successfully!");
-    }
-    db.query(sqlquery,onQueryComplete);
-  
+  //use try catch with async
+export async function modifyDbFromQuery(sqlquery){
+ try{
+    await db.query(sqlquery);  
+    console.log("Database modified successfully!");
+  } catch(err){ console.log(err)};
+
   }
+
+  //only need async if function uses await
   //works with await below - don't use callback if using async / await
   //promise so now have to handle promise
-  async function getRoles(){
+  export async function getRoles(){
    // let rolechoices = [];  //just declared and not defined
     //destructure results so only get 1st element in this case since it's an array  
     let [rows] = await db.query("select title from role;");
@@ -73,7 +90,7 @@ export function modifyDbFromQuery(sqlquery){
     return rows.map(role => role.title);  //map takes an array and returns a new array.  give callback function to every time in the array.
   }
   
-export  async function getEmployees(){
+export async function getEmployees(){
     //destructure results so only get 1st element in this case since it's an array  
     let [rows] = await db.query("select concat(first_name,' ',last_name) as Employee_Name from employee;");
      //pauses and waits
