@@ -20,6 +20,6 @@ VALUES ("John","Doe", 1,null),
        ("Ashley","Rodrigues",3 ,null),
        ("Kevin","Tupik",4,3), 
        ("Kunal","Singh", 5, null),
-       ("Malia","Brown",6 ,6),
+       ("Malia","Brown",6 ,5),
        ("Sarah","Lourd",7,null),
        ("Tom","Allen",8,7);

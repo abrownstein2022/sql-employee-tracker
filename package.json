@@ -3,11 +3,14 @@
   "version": "1.0.0",
   "description": "Build a command-line application from scratch to manage a company's employee database",
   "main": "index.js",
-  "type": "module",
   "scripts": {
+
     "test": "echo \"Error: no test specified\" && exit 1",
-    "schema": "dotenv cross-var mysql -u $DB_USER -p$DB_PASSWORD $DB_NAME < ./db/schema.sql",
-    "load": "node config/load.js"
+    "schema//+": "UNUSED: for scripts, enter 'npm run <script-name>' plus the script name ie 'npm run schema'",
+    "schema": "dotenv cross-var mysql -u $DB_USER -p $DB_PASSWORD $DB_NAME < ./db/schema.sql",
+    "load//+": "Use javascript 'load' file to connect to DB, load schema and seed data",
+    "load": "node config/load.js",
+    "start": "node src/index.js" 
   },
   "repository": {
     "type": "git",

@@ -1,9 +1,15 @@
+  //This file handles 
   //added "type": "module" to package.json
+  //removed type: module since doing es5 not es6
   //need async in case need to wait to complete something
-  import {getRoles,getRoleIdByTitle,getEmpIdByName,modifyDbFromQuery, validateInput, getEmployees } from "./utils.js";
-  import inquirer from "inquirer";
+  //import {getRoles,getRoleIdByTitle,getEmpIdByName,modifyDbFromQuery, validateInput, getEmployees } from "./utils.js";
+  //import inquirer from "inquirer";
+  //only use export in front of function if using import which is es6
 
-  export async function addEmployee(){
+  const {getRoles,getRoleIdByTitle,getEmpIdByName,modifyDbFromQuery, validateInput, getEmployees } = require("./utils.js");
+  const inquirer = require("inquirer");
+
+  async function addEmployee(){
     console.log("adding employee");
   //arrow function below is short-hand if/then/else
   // let rolechoices = db.query("select title from role;",(err, results)=> !err && results);
@@ -59,4 +65,5 @@
   
   }
   
-export default addEmployee;
+// export default addEmployee;
+module.exports = addEmployee;

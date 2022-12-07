@@ -8,7 +8,7 @@ const dotenv = require('dotenv').config();
 
 //change to below------ const mysql = require('mysql2/promise');   //need to use promise here so we can use await
 // import mysql from "mysql2/promise";
-const mysql = require("mysql2")
+const mysql = require("mysql2/promise")
 
 // create the connection to database
 // const connection = mysql.createConnection({
@@ -23,11 +23,11 @@ const mysql = require("mysql2")
 //12/6/22 alexis removed await below due to error 
 //SyntaxError: await is only valid in async functions and the top level bodies of modules
 //const db = await mysql.createConnection(
-  //+ not using promises here anymore - we are using 'mysql2/promise' which always returns a promise - must use await or .then
+  //+ we are using 'mysql2/promise' which always returns a promise - must use await or .then
 
 
-
-  const db = mysql.createConnection(
+const createConnection = async () => {
+  const db = await mysql.createConnection(
     {
       host: "127.0.0.1",
       user: process.env.DB_USER,
@@ -36,8 +36,8 @@ const mysql = require("mysql2")
     },
     console.log(`Connected to the Employee Tracker database.`)
   );
-
-
+  return db
+}
 
 
 
