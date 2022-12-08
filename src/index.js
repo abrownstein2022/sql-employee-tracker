@@ -22,14 +22,14 @@ const {
   renderTableFromQuery,
   modifyDbFromQuery,
   getRoles,
-  getEmployees,
+  getEmployees
 } = require("./utils.js"); //separated utils into own file
 
 
 //12/6/22 import addEmployee from "./addEmp.js";
 
 const addEmployee = require("./addEmp.js");
-
+const addRole = require("./addRole.js");
 
 // main menu for user input
 const menu = [
@@ -58,6 +58,18 @@ const menu = [
   },
 ];
 
+// TODO: Create a function to initialize app
+//date.now() means today's date.  Output this way to get unique test file each time.  Will change once project is complete.
+//writeToFile("README" + Date.now() + ".md", generateMarkdown(userInput));
+function showMainMenu() {
+  // console.clear(); //clear whatever is on terminal
+  inquirer.prompt(menu).then(function (answers) {
+    // console.log(answers);
+    runLogicFromMenu(answers.menuoptions); //return value in object so we don't have to play with the obj any longer
+    // writeToFile("README.md", generateMarkdown(userInput));
+  });
+}
+
 //calling break says don't go to next case, only do this one but only needed if not using return
 //and using return is preferred method
 //answers
@@ -82,16 +94,15 @@ function runLogicFromMenu(answers) {
       LEFT JOIN employee manager ON manager.id = employee.manager_id
       INNER JOIN role ON employee.role_id = role.id
       INNER JOIN department ON role.department_id = department.id;`
- 
-      return renderTableFromQuery(sqlquery); ///change logic to join all tables and display like the example and do alias for col headings
+      return renderTableFromQuery(sqlquery, showMainMenu); ///change logic to join all tables and display like the example and do alias for col headings
     case "Add Employee":
-      return addEmployee();
+      return addEmployee(showMainMenu);
     case "Add Employee Role":
       return addEmployeeRole();
     case "View All Roles":
       return viewAllRoles();
     case "Add Role":
-      return addRole();
+      return addRole(showMainMenu);
     case "View All Departments":
       return viewAllDepartments();
     case "Add Department":
@@ -115,18 +126,9 @@ function runLogicFromMenu(answers) {
   }
 }
 
-// TODO: Create a function to initialize app
-//date.now() means today's date.  Output this way to get unique test file each time.  Will change once project is complete.
-//writeToFile("README" + Date.now() + ".md", generateMarkdown(userInput));
-function init() {
-  console.clear(); //clear whatever is on terminal
-  inquirer.prompt(menu).then(function (answers) {
-    console.log(answers);
-    runLogicFromMenu(answers.menuoptions); //return value in object so we don't have to play with the obj any longer
-    // writeToFile("README.md", generateMarkdown(userInput));
-  });
-}
+
 
 //JS evaluates from top to bottom so that's why init is at the bottom so all functions are already defined.
 // Function call to initialize app
-init();
+showMainMenu();
+

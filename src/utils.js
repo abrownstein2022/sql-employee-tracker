@@ -3,24 +3,38 @@
 
 // import db from "../config/connection.js";
 const db = require("../config/connection.js");
+const showMainMenu = require("./index.js");
 
 async function getRoleIdByTitle(title) {
-  let [response] = await db.query(
-    "select id from role where title ='" + title + "'"
-  );
+  return new Promise((res)=>{
+
+    console.log('getting role id by title:', title)
+    // let data = 
+    db.query("select id from role where title ='" + title + "'", (err, data) => {
+      err ? res(err) : res(data[0].id)
+    });
+  })
+  // console.log('returning data:', data)
   //console.log(response[0].id);
   //return (await db.query("select id from role where title ='" + title + "'")).id
-  return response[0].id;
+  // return data.value;
 }
 async function getEmpIdByName(name) {
+  return new Promise((res)=>{
   //can be used to get mrg id or emp id because employees can be managers and stored in same table
-  let [response] = await db.query(
+  db.query(
     "select id from employee where concat(first_name,' ',last_name) ='" +
       name +
       "'"
+      ,(err, data) => {
+        if(err){
+          console.log(err)
+          res(err)
+        }
+        res(data[0].id)
+      }
   );
-  console.log(response[0].id);
-  return response[0].id;
+  })
 }
 //use one function to validate user input to questions below
 function validateInput(message) {
@@ -66,16 +80,27 @@ function validateInput(message) {
 
 //not using promises any longer here: promise must return something so return console.table(results)
 
-async function renderTableFromQuery(sqlquery) {
+async function renderTableFromQuery(sqlquery, showMainMenu) {
   //passes sql code
   //console.log(sqlquery);
   //need db.query after onQueryComplete so it's already defined before db.query executes
+  // clear the console before each table
+  console.clear()
   db.query(sqlquery, (err, data, fields) => {
     if(err){
       console.log(err)
     }
-//    console.log(data)
-    return console.table(data);
+    // return console.table(data.map(item => ({
+    //   id: item.id,
+    //   first_name: item.first_name,
+    //   last_name: item.last_name,
+    //   title: item.title,
+    //   department: item.department,
+    //   salary: item.salary,
+    //   manager: item.manager
+    // })));
+    console.table(data);
+    showMainMenu()
   }); 
 
   
@@ -87,39 +112,61 @@ async function renderTableFromQuery(sqlquery) {
 }
 
 //use try catch with async
-async function modifyDbFromQuery(sqlquery) {
-  try {
-    await db.query(sqlquery);
+function modifyDbFromQuery(sqlquery) {
+  try{
+    console.log("Modifying database...")
+    db.query(sqlquery, (err) => {
+      err && console.log(err)
+    });
     console.log("Database modified successfully!");
-  } catch (err) {
-    console.log(err);
+  }catch(err){
+    console.log('error modifying db:', err)
   }
 }
 
 //only need async if function uses await
 //works with await below - don't use callback if using async / await
 //promise so now have to handle promise
-async function getRoles() {
-  // let rolechoices = [];  //just declared and not defined
-  //destructure results so only get 1st element in this case since it's an array
-  let [rows] = await db.query("select title from role;");
-  //pauses and waits
-  // console.log(rows);  //it's an array
-  // process.exit(); //don't clear terminal
-  //arrow function have an implicit return- below role.title is returned
-  return rows.map((role) => role.title); //map takes an array and returns a new array.  give callback function to every time in the array.
+function getRoles() {
+  return new Promise(res => {
+
+    // console.log('getting roles list')
+    // let rolechoices = [];  //just declared and not defined
+    //destructure results so only get 1st element in this case since it's an array
+    db.query("select title from role;", (err, data) => {
+      if(err || !data.length) {
+        console.log('error getting roles:', err)
+        res(['error-getting-roles'])
+      } 
+      
+      console.log('data:', data)
+      // console.log('got titles:', titles)
+      res(data.map((role) => role.title)) //map takes an array and returns a new array.  give callback function to every time in the array.
+    });
+    //pauses and waits
+    // console.log(rows);  //it's an array
+    // process.exit(); //don't clear terminal
+    //arrow function have an implicit return- below role.title is returned
+  })
+
 }
 
 async function getEmployees() {
+  return new Promise(res => {
   //destructure results so only get 1st element in this case since it's an array
-  let [rows] = await db.query(
-    "select concat(first_name,' ',last_name) as Employee_Name from employee;"
-  );
+  let results = []
+  db.query(
+    "select concat(first_name,' ',last_name) as Employee_Name from employee;",
+    (err, data) => {
+      //map takes an array and returns a new array.  give callback function to every time in the array.
+      err ? res([]) : res(data.map((emp) => emp.Employee_Name))
+    }
+  ); 
+  })
   //pauses and waits
   // console.log(rows);  //it's an array
   // process.exit(); //don't clear terminal
   //arrow function have an implicit return- below role.title is returned
-  return rows.map((emp) => emp.Employee_Name); //map takes an array and returns a new array.  give callback function to every time in the array.
 }
 
 module.exports = {
