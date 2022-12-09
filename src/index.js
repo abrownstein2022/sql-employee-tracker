@@ -44,14 +44,14 @@ const menu = [
       "Add Role",
       "View All Departments",
       "Add Department",
-      "View Total Utilized Budget (Combined Salaries)of a Department",
-      // "Update Employee Managers",  //Bonus starting here is not required for this assignment - I'll do when I have more time
-      // "View Employees By Manager",
-      // "View Employees By Department",
+     //Bonus starting here is not required for this assignment - I'll do extras as I have time
+      "View Total Utilized Budget (Combined Salaries) of a Department",
+      // "Update Employee Managers", 
+      "View Employees By Manager",
+      "View Employees By Department",
       // "Delete Departments",
       // "Delete Roles",
       // "Delete Employees",
-
     ],
     default: "View All Employees",
     message: "What would you like to do?",
@@ -113,21 +113,21 @@ function runLogicFromMenu(answers) {
     // case "Update Employee Managers":
     //   return updateEmployeeManagers();
     case "View Employees By Manager":
-      sqlquery= `SELECT  CONCAT(manager.first_name,' ', manager.last_name) AS manager, employee.first_name, employee.last_name, role.title, department.name, role.salary
+      sqlquery= `SELECT  CONCAT(manager.first_name,' ', manager.last_name) AS manager, concat(employee.first_name, ' ', employee.last_name) as employee, role.title, department.name as department, role.salary
       FROM employee 
       LEFT JOIN employee manager ON manager.id = employee.manager_id
       INNER JOIN role ON employee.role_id = role.id
       INNER JOIN department ON role.department_id = department.id
-      GROUP BY CONCAT(manager.first_name,' ', manager.last_name), employee.first_name, employee.last_name, role.title, department.name, role.salary
+      GROUP BY CONCAT(manager.first_name,' ', manager.last_name), concat(employee.first_name, ' ', employee.last_name), role.title, department.name, role.salary
       ORDER BY CONCAT(manager.first_name,' ', manager.last_name);`
       return renderTableFromQuery(sqlquery, showMainMenu); 
     case "View Employees By Department":
-      sqlquery= `SELECT department.name, employee.first_name, employee.last_name, role.title, role.salary, CONCAT(manager.first_name,' ', manager.last_name) AS manager
+      sqlquery= `SELECT department.name as department, concat(employee.first_name, ' ', employee.last_name) as employee, role.title as employee_title, role.salary, CONCAT(manager.first_name,' ', manager.last_name) AS manager
       FROM employee 
       LEFT JOIN employee manager ON manager.id = employee.manager_id
       INNER JOIN role ON employee.role_id = role.id
       INNER JOIN department ON role.department_id = department.id
-      GROUP BY department.name, CONCAT(manager.first_name,' ', manager.last_name), employee.first_name, employee.last_name, role.title, role.salary
+      GROUP BY department.name, CONCAT(manager.first_name,' ', manager.last_name), concat(employee.first_name, ' ', employee.last_name), role.title, role.salary
       ORDER BY department.name;`
       return renderTableFromQuery(sqlquery, showMainMenu); 
     // case "Delete Departments":
@@ -136,7 +136,7 @@ function runLogicFromMenu(answers) {
     //   return deleteRoles();
     // case "Delete Employees":
     //   return deleteEmployees();
-    case "View Total Utilized Budget (Combined Salaries)of a Department":
+    case "View Total Utilized Budget (Combined Salaries) of a Department":
       sqlquery= `SELECT department.name as department_name, 
       CONCAT('$', FORMAT(sum(salary), 0)) as 'combined-salaries-by-dept'
      FROM employee 
@@ -147,7 +147,7 @@ function runLogicFromMenu(answers) {
      ORDER BY department.name;`
       return renderTableFromQuery(sqlquery, showMainMenu); 
     default:
-      return init(); //redo the menu if for some reason, this switch has an issue but should never get here.
+      return showMainMenu(); //redo the menu if for some reason, this switch has an issue but should never get here.
   }
 }
 
