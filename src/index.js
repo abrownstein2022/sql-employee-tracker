@@ -73,6 +73,7 @@ function showMainMenu() {
 //calling break says don't go to next case, only do this one but only needed if not using return
 //and using return is preferred method
 //answers
+let sqlquery = ""; //initialize
 function runLogicFromMenu(answers) {
   //2 key value pairs tuples {q1:a1,q2:a2} answers:questions. menuoptions is the name of the questions from line 33
   //console.log(answers);
@@ -89,7 +90,7 @@ function runLogicFromMenu(answers) {
       // "order by e.id";
       // let sqlquery = "select e.id, e.first_name, e.last_name, r.title, d.name as department, r.salary,  from employee as e join role as r join department as d";
       //use template literal so don't have to use "" and + on each line as I did above
-      let sqlquery= `SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name, role.salary, CONCAT(manager.first_name,' ', manager.last_name) AS manager
+      sqlquery= `SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name, role.salary, CONCAT(manager.first_name,' ', manager.last_name) AS manager
       FROM employee 
       LEFT JOIN employee manager ON manager.id = employee.manager_id
       INNER JOIN role ON employee.role_id = role.id
@@ -100,27 +101,51 @@ function runLogicFromMenu(answers) {
     case "Add Employee Role":
       return addEmployeeRole();
     case "View All Roles":
-      return viewAllRoles();
+      sqlquery= `SELECT role.id, role.title, role.salary, department.name as department_name from role join department on department.id = role.department_id;`
+      return renderTableFromQuery(sqlquery, showMainMenu); 
     case "Add Role":
       return addRole(showMainMenu);
     case "View All Departments":
-      return viewAllDepartments();
+      sqlquery= `SELECT id, name as department_name from department;`
+      return renderTableFromQuery(sqlquery, showMainMenu); 
     case "Add Department":
       return addDepartment();
-    case "Update Employee Managers":
-      return updateEmployeeManagers();
+    // case "Update Employee Managers":
+    //   return updateEmployeeManagers();
     case "View Employees By Manager":
-      return viewEmployeesByManager();
+      sqlquery= `SELECT  CONCAT(manager.first_name,' ', manager.last_name) AS manager, employee.first_name, employee.last_name, role.title, department.name, role.salary
+      FROM employee 
+      LEFT JOIN employee manager ON manager.id = employee.manager_id
+      INNER JOIN role ON employee.role_id = role.id
+      INNER JOIN department ON role.department_id = department.id
+      GROUP BY CONCAT(manager.first_name,' ', manager.last_name), employee.first_name, employee.last_name, role.title, department.name, role.salary
+      ORDER BY CONCAT(manager.first_name,' ', manager.last_name);`
+      return renderTableFromQuery(sqlquery, showMainMenu); 
     case "View Employees By Department":
-      return viewEmployeesByDepartment();
-    case "Delete Departments":
-      return deleteDepartments();
-    case "Delete Roles":
-      return deleteRoles();
-    case "Delete Employees":
-      return deleteEmployees();
+      sqlquery= `SELECT department.name, employee.first_name, employee.last_name, role.title, role.salary, CONCAT(manager.first_name,' ', manager.last_name) AS manager
+      FROM employee 
+      LEFT JOIN employee manager ON manager.id = employee.manager_id
+      INNER JOIN role ON employee.role_id = role.id
+      INNER JOIN department ON role.department_id = department.id
+      GROUP BY department.name, CONCAT(manager.first_name,' ', manager.last_name), employee.first_name, employee.last_name, role.title, role.salary
+      ORDER BY department.name;`
+      return renderTableFromQuery(sqlquery, showMainMenu); 
+    // case "Delete Departments":
+    //   return deleteDepartments();
+    // case "Delete Roles":
+    //   return deleteRoles();
+    // case "Delete Employees":
+    //   return deleteEmployees();
     case "View Total Utilized Budget (Combined Salaries)of a Department":
-      return viewTotalBudget();
+      sqlquery= `SELECT department.name as department_name, 
+      CONCAT('$', FORMAT(sum(salary), 0)) as 'combined-salaries-by-dept'
+     FROM employee 
+     LEFT JOIN employee manager ON manager.id = employee.manager_id
+     INNER JOIN role ON employee.role_id = role.id
+     INNER JOIN department ON role.department_id = department.id
+     GROUP BY department.name
+     ORDER BY department.name;`
+      return renderTableFromQuery(sqlquery, showMainMenu); 
     default:
       return init(); //redo the menu if for some reason, this switch has an issue but should never get here.
   }

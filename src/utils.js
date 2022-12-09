@@ -90,17 +90,23 @@ async function renderTableFromQuery(sqlquery, showMainMenu) {
     if(err){
       console.log(err)
     }
-    // return console.table(data.map(item => ({
-    //   id: item.id,
-    //   first_name: item.first_name,
-    //   last_name: item.last_name,
-    //   title: item.title,
-    //   department: item.department,
-    //   salary: item.salary,
-    //   manager: item.manager
-    // })));
-    console.table(data);
-    showMainMenu()
+   // console.table(data.map(item => ({
+   //   id: item.id,
+   //   first_name: item.first_name,
+   //   last_name: item.last_name,
+    //  title: item.title,
+    //  department: item.department,
+    //  salary: item.salary,
+    //  manager: item.manager
+   // })));
+   console.table(data);
+   //const array = [{myId: 42, name: 'John', color: 'red'}, {myId: 1337, name: 'Jane', color: 'blue'}]
+
+// const transformed = data.reduce((acc, {myId, ...x}) => { acc[myId] = x; return acc}, {})
+
+// console.data(transformed) 
+  
+    showMainMenu();
   }); 
 
   
