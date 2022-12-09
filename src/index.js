@@ -30,6 +30,7 @@ const {
 
 const addEmployee = require("./addEmp.js");
 const addRole = require("./addRole.js");
+const addDept = require("./addDept.js");
 
 // main menu for user input
 const menu = [
@@ -90,7 +91,7 @@ function runLogicFromMenu(answers) {
       // "order by e.id";
       // let sqlquery = "select e.id, e.first_name, e.last_name, r.title, d.name as department, r.salary,  from employee as e join role as r join department as d";
       //use template literal so don't have to use "" and + on each line as I did above
-      sqlquery= `SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name, role.salary, CONCAT(manager.first_name,' ', manager.last_name) AS manager
+      sqlquery= `SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name as department, role.salary, CONCAT(manager.first_name,' ', manager.last_name) AS manager
       FROM employee 
       LEFT JOIN employee manager ON manager.id = employee.manager_id
       INNER JOIN role ON employee.role_id = role.id
@@ -109,9 +110,7 @@ function runLogicFromMenu(answers) {
       sqlquery= `SELECT id, name as department_name from department;`
       return renderTableFromQuery(sqlquery, showMainMenu); 
     case "Add Department":
-      return addDepartment();
-    // case "Update Employee Managers":
-    //   return updateEmployeeManagers();
+      return addDept(showMainMenu);
     case "View Employees By Manager":
       sqlquery= `SELECT  CONCAT(manager.first_name,' ', manager.last_name) AS manager, concat(employee.first_name, ' ', employee.last_name) as employee, role.title, department.name as department, role.salary
       FROM employee 
@@ -150,8 +149,6 @@ function runLogicFromMenu(answers) {
       return showMainMenu(); //redo the menu if for some reason, this switch has an issue but should never get here.
   }
 }
-
-
 
 //JS evaluates from top to bottom so that's why init is at the bottom so all functions are already defined.
 // Function call to initialize app
