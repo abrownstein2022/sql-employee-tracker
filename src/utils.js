@@ -129,7 +129,7 @@ function getRoles() {
         res(['error-getting-roles'])
       } 
       
-      console.log('data:', data)
+      //console.log('data:', data)
       // console.log('got titles:', titles)
       // res(data.map((role) => role.title)) //map takes an array and returns a new array.  give callback function to every time in the array.
       res( data.map((role) => ({ name: role.title, value: role.id }) ))
@@ -146,7 +146,7 @@ async function getEmployees() {
   return new Promise(res => {
   //destructure results so only get 1st element in this case since it's an array
   db.query(
-    "select concat(first_name,' ',last_name) as full_name, id from employee;",
+    "select concat(first_name,' ',last_name) as full_name, id from employee order by last_name, first_name;",
     (err, data) => {
       //map takes an array and returns a new array.  give callback function to every time in the array.
       err ? res([]) : res( data.map((emp) => ({ name: emp.full_name, value: emp.id}) ))
@@ -166,9 +166,9 @@ function getDepartments() {
     // console.log('getting roles list')
     // let rolechoices = [];  //just declared and not defined
     //destructure results so only get 1st element in this case since it's an array
-    db.query("select name, id from department;", (err, data) => {
+    db.query("select name, id from department order by name;", (err, data) => {
       if(err || !data.length) {
-        console.log('error getting roles:', err)
+        console.log('Error getting roles:', err)
         res(['error-getting-depts'])
       } 
       

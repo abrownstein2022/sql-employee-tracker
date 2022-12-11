@@ -28,7 +28,7 @@ const {
 
 //12/6/22 import addEmployee from "./addEmp.js";
 
-const updEmployeeRole = require("./updEmployeeRole.js");
+const updEmployeeRole = require("./updEmpRole.js");
 const addEmployee = require("./addEmp.js");
 const addRole = require("./addRole.js");
 const addDept = require("./addDept.js");
@@ -98,19 +98,19 @@ async function runLogicFromMenu(answers) {
       FROM employee 
       LEFT JOIN employee manager ON manager.id = employee.manager_id
       INNER JOIN role ON employee.role_id = role.id
-      INNER JOIN department ON role.department_id = department.id;`
+      INNER JOIN department ON role.department_id = department.id ORDER BY employee.last_name, employee. first_name;`
       return renderTableFromQuery(sqlquery, showMainMenu); ///change logic to join all tables and display like the example and do alias for col headings
     case "Add Employee":
       return addEmployee(showMainMenu);
     case "Update Employee Role":
       return updEmployeeRole(showMainMenu);
     case "View All Roles":
-      sqlquery= `SELECT role.id, role.title, role.salary, department.name as department_name from role join department on department.id = role.department_id;`
+      sqlquery= `SELECT role.id, role.title, role.salary, department.name as department_name from role join department on department.id = role.department_id ORDER BY title;`
       return renderTableFromQuery(sqlquery, showMainMenu); 
     case "Add Role":
       return addRole(showMainMenu);
     case "View All Departments":
-      sqlquery= `SELECT id, name as department_name from department;`
+      sqlquery= `SELECT id, name as department_name from department ORDER BY name;`
       return renderTableFromQuery(sqlquery, showMainMenu); 
     case "Add Department":
       return addDept(showMainMenu);

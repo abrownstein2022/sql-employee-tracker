@@ -106,7 +106,7 @@ const addEmp = async (showMainMenu) => {
 
     db.query("SELECT * FROM roles", function (err, result, fields) {
       if (err) throw err;
-      console.log(result);
+      //console.log(result);
       // I THINK - the function has to return a value, in order to assign it to 'roles'
       roles = result
     })    
