@@ -11,7 +11,7 @@ const inquirer = require("inquirer");
 
 //showMainMenu is a function we're passing to go directly to the main menu after running this menu item
 const addDept = async (showMainMenu) => {
-    console.log("adding dept");
+    //console.log("adding dept");
 
     inquirer.prompt([
       {
@@ -23,7 +23,7 @@ const addDept = async (showMainMenu) => {
     ]
     )
     .then(async (answers) => {
-        console.log('new department details:', answers);
+     //   console.log('new department details:', answers);
         let sql = "insert into department (name) values('" + answers.name + "')";
         //use function below to execute sql code
           modifyDbFromQuery(sql);
@@ -33,7 +33,7 @@ const addDept = async (showMainMenu) => {
     })
     //finally is always run after thens and catch no matter what the result is (if errors or no errors)
     .finally(() => {
-      console.log('inquirer done?')
+    //  console.log('inquirer done?')
       showMainMenu();
     })
 

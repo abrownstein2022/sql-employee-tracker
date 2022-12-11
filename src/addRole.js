@@ -6,12 +6,14 @@
   //import inquirer from "inquirer";
   //only use export in front of function if using import which is es6
 
-const {getRoles,getRoleIdByTitle,getEmpIdByName,modifyDbFromQuery, validateInput, getEmployees } = require("./utils.js");
+const {getRoles,getRoleIdByTitle,getEmpIdByName,modifyDbFromQuery, validateInput, getEmployees, getDepartments } = require("./utils.js");
 const inquirer = require("inquirer");
 
 //showMainMenu is a function we're passing to go directly to the main menu after running this menu item
 const addRole = async (showMainMenu) => {
-    console.log("adding role");
+  //  console.log("adding role");
+
+    let dept = await getDepartments()
 
     inquirer.prompt([
       {
@@ -34,9 +36,10 @@ const addRole = async (showMainMenu) => {
       //   message: 'Please select role:'
       // }, 
       {  //need to validate number value in addition to not empty
-        type: 'input',
+        type: 'list',
         name: 'departmentid',
         message: 'Enter department Id:',   
+        choices: dept,
         validate: validateInput("department Id")  
       }
   
@@ -67,7 +70,7 @@ const addRole = async (showMainMenu) => {
     })
     //finally is always run after thens and catch no matter what the result is (if errors or no errors)
     .finally(() => {
-      console.log('inquirer done?')
+      //console.log('inquirer done?')
       showMainMenu();
     })
 

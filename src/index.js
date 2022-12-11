@@ -28,6 +28,7 @@ const {
 
 //12/6/22 import addEmployee from "./addEmp.js";
 
+const updEmployeeRole = require("./updEmployeeRole.js");
 const addEmployee = require("./addEmp.js");
 const addRole = require("./addRole.js");
 const addDept = require("./addDept.js");
@@ -38,6 +39,7 @@ const menu = [
     type: "list",
     name: "menuoptions",
     choices: [
+      "EXIT",
       "View All Employees",
       "Add Employee",
       "Update Employee Role",
@@ -75,10 +77,11 @@ function showMainMenu() {
 //and using return is preferred method
 //answers
 let sqlquery = ""; //initialize
-function runLogicFromMenu(answers) {
+async function runLogicFromMenu(answers) {
   //2 key value pairs tuples {q1:a1,q2:a2} answers:questions. menuoptions is the name of the questions from line 33
   //console.log(answers);
   switch (answers) {
+    case "EXIT": process.exit(0)
     case "View All Employees":
       // let sqlquery = "select e.id , e.first_name, e.last_name, r.title, d.name as department, r.salary, concat(em.first_name, ' ' , em.last_name) as manager, e.manager_id "
       // " from employee as e" +
@@ -99,8 +102,8 @@ function runLogicFromMenu(answers) {
       return renderTableFromQuery(sqlquery, showMainMenu); ///change logic to join all tables and display like the example and do alias for col headings
     case "Add Employee":
       return addEmployee(showMainMenu);
-    case "Add Employee Role":
-      return addEmployeeRole();
+    case "Update Employee Role":
+      return updEmployeeRole(showMainMenu);
     case "View All Roles":
       sqlquery= `SELECT role.id, role.title, role.salary, department.name as department_name from role join department on department.id = role.department_id;`
       return renderTableFromQuery(sqlquery, showMainMenu); 

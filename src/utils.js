@@ -85,31 +85,15 @@ async function renderTableFromQuery(sqlquery, showMainMenu) {
   //console.log(sqlquery);
   //need db.query after onQueryComplete so it's already defined before db.query executes
   // clear the console before each table
-  console.clear()
-  db.query(sqlquery, (err, data, fields) => {
+   console.clear()
+   db.query(sqlquery, (err, data, fields) => {
     if(err){
       console.log(err)
     }
-   // console.table(data.map(item => ({
-   //   id: item.id,
-   //   first_name: item.first_name,
-   //   last_name: item.last_name,
-    //  title: item.title,
-    //  department: item.department,
-    //  salary: item.salary,
-    //  manager: item.manager
-   // })));
    console.table(data);
-   //const array = [{myId: 42, name: 'John', color: 'red'}, {myId: 1337, name: 'Jane', color: 'blue'}]
-
-// const transformed = data.reduce((acc, {myId, ...x}) => { acc[myId] = x; return acc}, {})
-
-// console.data(transformed) 
-  
-    showMainMenu();
+   showMainMenu();
   }); 
 
-  
 
   //db.query invoked by mysql2 - either err or results
   //console.log(results);   //return object called results from http - we want to see data value/key inside the object results
@@ -139,7 +123,7 @@ function getRoles() {
     // console.log('getting roles list')
     // let rolechoices = [];  //just declared and not defined
     //destructure results so only get 1st element in this case since it's an array
-    db.query("select title from role;", (err, data) => {
+    db.query("select title, id from role;", (err, data) => {
       if(err || !data.length) {
         console.log('error getting roles:', err)
         res(['error-getting-roles'])
@@ -147,7 +131,8 @@ function getRoles() {
       
       console.log('data:', data)
       // console.log('got titles:', titles)
-      res(data.map((role) => role.title)) //map takes an array and returns a new array.  give callback function to every time in the array.
+      // res(data.map((role) => role.title)) //map takes an array and returns a new array.  give callback function to every time in the array.
+      res( data.map((role) => ({ name: role.title, value: role.id }) ))
     });
     //pauses and waits
     // console.log(rows);  //it's an array
@@ -160,12 +145,12 @@ function getRoles() {
 async function getEmployees() {
   return new Promise(res => {
   //destructure results so only get 1st element in this case since it's an array
-  let results = []
   db.query(
-    "select concat(first_name,' ',last_name) as Employee_Name from employee;",
+    "select concat(first_name,' ',last_name) as full_name, id from employee;",
     (err, data) => {
       //map takes an array and returns a new array.  give callback function to every time in the array.
-      err ? res([]) : res(data.map((emp) => emp.Employee_Name))
+      err ? res([]) : res( data.map((emp) => ({ name: emp.full_name, value: emp.id}) ))
+      // err ? res([]) : res( data.map((emp) => `${emp.id}:${emp.full_name}` ))
     }
   ); 
   })
@@ -173,6 +158,31 @@ async function getEmployees() {
   // console.log(rows);  //it's an array
   // process.exit(); //don't clear terminal
   //arrow function have an implicit return- below role.title is returned
+}
+
+function getDepartments() {
+  return new Promise(res => {
+
+    // console.log('getting roles list')
+    // let rolechoices = [];  //just declared and not defined
+    //destructure results so only get 1st element in this case since it's an array
+    db.query("select name, id from department;", (err, data) => {
+      if(err || !data.length) {
+        console.log('error getting roles:', err)
+        res(['error-getting-depts'])
+      } 
+      
+     // console.log('data:', data)
+      // console.log('got titles:', titles)
+      // res(data.map((role) => role.title)) //map takes an array and returns a new array.  give callback function to every time in the array.
+      res( data.map((x) => ({ name: x.name, value: x.id }) ))
+    });
+    //pauses and waits
+    // console.log(rows);  //it's an array
+    // process.exit(); //don't clear terminal
+    //arrow function have an implicit return- below role.title is returned
+  })
+
 }
 
 module.exports = {
@@ -183,4 +193,5 @@ module.exports = {
   modifyDbFromQuery,
   getRoles,
   getEmployees,
+  getDepartments
 };
