@@ -53,28 +53,18 @@ THEN I am prompted to select an employee to update and their new role and this i
 ## Installation
 <!-- audience is other developers -->
 
-1. Clone this GitHub repo https://github.com/abrownstein2022/ch11-express-note-taker:
+1. Clone this GitHub repo https://github.com/abrownstein2022/ch12-sql-employee-tracker:
 <!-- Check out the gh cli tool from github -->
 ```bash
-$ gh repo clone /abrownstein2022/ch11-express-note-taker
+$ gh repo clone /abrownstein2022/ch12-sql-employee-tracker
 ```
-2. From the terminal, install npm and uuid:
+2. From the terminal, install npm, mysql2, inqurier v8.2.4 and npmjs console.tabe packages:
 
 ```bash
 $ npm install
-$ npm uuid
+$ npm 
 ```
 
-<!-- [] implies user input 
- mysql> restaurant_mgr < C:\[filename].sql
--->
-
-3. Start the local server and watch for file changes to automatically restart server:
-```bash
-$ npm run watch 
-```
-
-4. Open Express or a browser to test any changes you make to the application after cloning.
 
 ## Usage
 
