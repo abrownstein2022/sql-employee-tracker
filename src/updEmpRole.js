@@ -1,6 +1,6 @@
 //when I choose to update an employee role
 //THEN I am prompted to select an employee to update and their new role and this information is updated in the database.
-//! github.com/Automattic/cli-table
+//! github.com/Automatic/cli-table
 const {getRoles,getRoleIdByTitle,getEmpIdByName,modifyDbFromQuery, validateInput, getEmployees } = require("./utils.js");
 const inquirer = require("inquirer");
 

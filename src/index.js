@@ -12,6 +12,9 @@
 //12/6/22 alexis changed to require es5 not es6
 // const mysql = require('mysql2');
 const inquirer = require("inquirer");
+//https://www.npmjs.com/package/console.table
+ //package installed npm install console.table --save
+const cTable = require('console.table'); 
 
 //const PORT = process.env.PORT || 3001;
 
