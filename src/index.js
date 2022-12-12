@@ -64,11 +64,25 @@ const menu = [
   },
 ];
 
+const showMainMenuHeading = () => {
+  console.log("|==============================================|");
+  console.log("|   ____                                       |");  
+  console.log("|  |       _   _   _       __        __  __    |");   
+  console.log("|  |---   | | | | | ) |   |  | |__| |_  |_     |");  
+  console.log("|  |____  |  V  | |   |__ |__|   |  |__ |__    |");  
+  console.log("|  __  __                                      |");  
+  console.log("|  | | | |   _    _    _   ___   ___   _       |");  
+  console.log("|  |  V  |  (_)  | |  (_)  |  _  |_   |_)      |");  
+  console.log("|  |     |  | |  | |  | |  |__|  |__  | |      |");  
+  console.log("|==============================================|");
+  showMainMenu();
+};
+
 // TODO: Create a function to initialize app
 //date.now() means today's date.  Output this way to get unique test file each time.  Will change once project is complete.
 //writeToFile("README" + Date.now() + ".md", generateMarkdown(userInput));
 function showMainMenu() {
-  // console.clear(); //clear whatever is on terminal
+  //console.clear(); //clear whatever is on terminal
   inquirer.prompt(menu).then(function (answers) {
     // console.log(answers);
     runLogicFromMenu(answers.menuoptions); //return value in object so we don't have to play with the obj any longer
@@ -83,6 +97,7 @@ let sqlquery = ""; //initialize
 async function runLogicFromMenu(answers) {
   //2 key value pairs tuples {q1:a1,q2:a2} answers:questions. menuoptions is the name of the questions from line 33
   //console.log(answers);
+  console.clear();
   switch (answers) {
     case "EXIT": process.exit(0)
     case "View All Employees":
@@ -158,5 +173,6 @@ async function runLogicFromMenu(answers) {
 
 //JS evaluates from top to bottom so that's why init is at the bottom so all functions are already defined.
 // Function call to initialize app
-showMainMenu();
+//showMainMenu();
+showMainMenuHeading();
 

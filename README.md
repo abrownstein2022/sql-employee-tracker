@@ -58,37 +58,51 @@ THEN I am prompted to select an employee to update and their new role and this i
 ```bash
 $ gh repo clone /abrownstein2022/ch12-sql-employee-tracker
 ```
-2. From the terminal, install npm, mysql2, inqurier v8.2.4 and npmjs console.tabe packages:
+
+2. From the terminal, install npm, mysql2, inqurier v8.2.4 and npmjs console.table packages:
 
 ```bash
-$ npm install
-$ npm 
+$ npm i
+$ npm install mysql
+$ npm install inquirer@8.2.4
+$ npm install console.table --save
+
 ```
 
+3. Log into mysql, create the database on your local machine and seed the database:
+
+```bash
+$ mysql -u root -p 
+mysql> source db/schema.sql
+mysql> source db/seeds.sql
+```
 
 ## Usage
 
-```md
-1. Open the app using Express or Heroku (https://ch11-express-notes-taker.herokuapp.com)
-2. From the landing page, click on the notes page to see a page with existing notes on the left-hand column, plus empty fields
-to enter a new note title and text.
-3. Press the Save icon to save this info and see it in the left-hand column.
-4. When you click on the Write icon in the top navigation, I see empty fields to enter a new note title and text. 
-5. Press the Delete icon to delete a note.
-
-**Please review to the screenshots below to view the application:**
+To start the application, go to the Terminal and enter what's below:
+```bash
+$npm start
 ```
-![example image welcome page with login and register links](./public/images/welcome-page.jpg)
 
-![example image login page](./public/images/login-page.jpg)
+**Then follow the screenshots below:**
+```
+![example image welcome page with login and register links](./assets/images/welcome-page.jpg)
 
+![example image login page](./assets/images/login-page.jpg)
+
+![example image register page](./assets/images/register-page.jpg)
+
+
+
+
+**Please also review the following demo video:**
 ![example image register page](./public/images/register-page.jpg)
 
 
 ## Credits
 
 ```md
-Alexis Brownstein, bootcamp tutor: Phil and Wyzant tutor: Mike
+Alexis Brownstein, Wyzant tutor: Mike
 ```
 
 ## License
@@ -127,10 +141,8 @@ _underline_
 Feattures for *future* development
  -->
 **The main features in this project are:**<br>
-1. Uses Express.js and uuid
-1. Deployed on Heroku
-1. GET, POST and DELETE routes for retrieving, adding and deleteing note data
-1. Dates-fns to format the order date in vieworder.handlebars (https://date-fns.org/)
+1. Uses Node.js, Inqurier, MySQL and npmjs console.table
+1. Example screenshots and a demonstration video
 1. Necessary folder structure 
 1. Professional README
 
@@ -150,6 +162,6 @@ I can be reached at alexis@drdatabase.com.
 
 This GitHub repo can be found at:
   
-https://github.com/abrownstein2022/ch11-express-note-taker
+https://github.com/abrownstein2022/ch12-sql-employee-tracker
  
 

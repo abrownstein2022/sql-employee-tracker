@@ -1,3 +1,4 @@
+Use EMPLOYEE_TRACKER;
 INSERT INTO `department` (name)
 VALUES("Sales"),
       ("Engineering"),
