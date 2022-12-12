@@ -6,7 +6,7 @@ const inquirer = require("inquirer");
 
 //showMainMenu is a function we're passing to go directly to the main menu after running this menu item
 const updEmployeeRole = async (showMainMenu) => {
-    console.log("updating employee role");
+  //  console.log("updating employee role");
 
 
     let emps = await getEmployees()

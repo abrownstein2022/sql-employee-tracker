@@ -94,6 +94,7 @@ function showMainMenu() {
 //and using return is preferred method
 //answers
 let sqlquery = ""; //initialize
+let menuselectedtext = ""; //alexis 12/11/22
 async function runLogicFromMenu(answers) {
   //2 key value pairs tuples {q1:a1,q2:a2} answers:questions. menuoptions is the name of the questions from line 33
   //console.log(answers);
@@ -118,30 +119,29 @@ async function runLogicFromMenu(answers) {
       LEFT JOIN employee manager ON manager.id = employee.manager_id
       INNER JOIN role ON employee.role_id = role.id
       INNER JOIN department ON role.department_id = department.id ORDER BY employee.last_name, employee. first_name;`;
-      console.log ("Viewing all emloyees");
-      return renderTableFromQuery(sqlquery, showMainMenu); ///change logic to join all tables and display like the example and do alias for col headings
+      //console.log ("Viewing all emloyees");
+      menuselectedtext = "**View all employees**";
+      return renderTableFromQuery(sqlquery, showMainMenu, menuselectedtext); ///change logic to join all tables and display like the example and do alias for col headings
     case "Add Employee":
-      console.log ("Add employee");
-      return addEmployee(showMainMenu);
+      menuselectedtext = "**Add employee**";
+      return addEmployee(showMainMenu, menuselectedtext);
     case "Update Employee Role":
-      console.log ("Update employee role");
-      return updEmployeeRole(showMainMenu);
-    case "View All Roles":
-      console.log ("Viewing all roles");
+      // menuselectedtext = "**Update employee role**";  
+      return updEmployeeRole(showMainMenu, menuselectedtext);
+    case "View All Roles":    
+      menuselectedtext = "**View all roles**";
       sqlquery = `SELECT role.id, role.title, role.salary, department.name as department_name from role join department on department.id = role.department_id ORDER BY title;`;
-      return renderTableFromQuery(sqlquery, showMainMenu);
+      return renderTableFromQuery(sqlquery, showMainMenu, menuselectedtext);
     case "Add Role":
-      console.log ("Add role");
       return addRole(showMainMenu);
     case "View All Departments":
-      console.log ("Viewing all departments");
+      menuselectedtext = "**View all departments**";
       sqlquery = `SELECT id, name as department_name from department ORDER BY name;`;
-      return renderTableFromQuery(sqlquery, showMainMenu);
+      return renderTableFromQuery(sqlquery, showMainMenu, menuselectedtext);
     case "Add Department":
-      console.log ("Add department");
       return addDept(showMainMenu);
     case "View Employees By Manager":
-      console.log ("Viewing all emloyees by manager");
+      menuselectedtext = "**View emloyees by manager**";
       sqlquery = `SELECT  CONCAT(manager.first_name,' ', manager.last_name) AS manager, concat(employee.first_name, ' ', employee.last_name) as employee, role.title, department.name as department, role.salary
       FROM employee 
       LEFT JOIN employee manager ON manager.id = employee.manager_id
@@ -149,9 +149,9 @@ async function runLogicFromMenu(answers) {
       INNER JOIN department ON role.department_id = department.id
       GROUP BY CONCAT(manager.first_name,' ', manager.last_name), concat(employee.first_name, ' ', employee.last_name), role.title, department.name, role.salary
       ORDER BY CONCAT(manager.first_name,' ', manager.last_name);`;
-      return renderTableFromQuery(sqlquery, showMainMenu);
-    case "View Employees By Department":
-      console.log ("Viewing all emloyees by department");
+      return renderTableFromQuery(sqlquery, showMainMenu, menuselectedtext);
+    case "**View Employees By Department**":
+      menuselectedtext = "**View all emloyees by department**";
       sqlquery = `SELECT department.name as department, concat(employee.first_name, ' ', employee.last_name) as employee, role.title as employee_title, role.salary, CONCAT(manager.first_name,' ', manager.last_name) AS manager
       FROM employee 
       LEFT JOIN employee manager ON manager.id = employee.manager_id
@@ -159,15 +159,15 @@ async function runLogicFromMenu(answers) {
       INNER JOIN department ON role.department_id = department.id
       GROUP BY department.name, CONCAT(manager.first_name,' ', manager.last_name), concat(employee.first_name, ' ', employee.last_name), role.title, role.salary
       ORDER BY department.name;`;
-      return renderTableFromQuery(sqlquery, showMainMenu);
+      return renderTableFromQuery(sqlquery, showMainMenu, menuselectedtext);
     // case "Delete Departments":
     //   return deleteDepartments();
     // case "Delete Roles":
     //   return deleteRoles();
     // case "Delete Employees":
     //   return deleteEmployees();
-    case "View Total Utilized Budget (Combined Salaries) of a Department":
-      console.log ("Viewing total utilized budget (combined salaries) by department");
+    case "**View Total Utilized Budget (Combined Salaries) of a Department**":
+      menuselectedtext ="View total utilized budget (combined salaries) by department";
       sqlquery = `SELECT department.name as department_name, 
       CONCAT('$', FORMAT(sum(salary), 0)) as 'combined-salaries-by-dept'
      FROM employee 
@@ -176,7 +176,7 @@ async function runLogicFromMenu(answers) {
      INNER JOIN department ON role.department_id = department.id
      GROUP BY department.name
      ORDER BY department.name;`;
-      return renderTableFromQuery(sqlquery, showMainMenu);
+      return renderTableFromQuery(sqlquery, showMainMenu, menuselectedtext);
     default:
       return showMainMenu(); //redo the menu if for some reason, this switch has an issue but should never get here.
   }
