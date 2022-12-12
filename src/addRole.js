@@ -46,7 +46,7 @@ const addRole = async (showMainMenu) => {
     ]
     )
     .then(async (answers) => {
-        console.log('new role details:', answers);
+        //console.log('new role details:', answers);
         //insert into employee table
         //first need to get role id for role(title) selected
         //console.log(answers.role);

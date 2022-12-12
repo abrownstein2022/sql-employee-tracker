@@ -95,7 +95,7 @@ $npm start
 
 
 
-**Please also review the following demo video:**
+**Please also review the following demonstration video:**
 ![example image register page](./public/images/register-page.jpg)
 
 

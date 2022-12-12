@@ -92,7 +92,8 @@ function validateInput(message) {
       console.log(err)
     }
 
-   console.log(menuselectedtext); //alexis 12/11/22
+   //no longer needed - got it working a better way
+   //console.log(menuselectedtext); //alexis 12/11/22
    console.table(data);
    showMainMenu();
   }); 

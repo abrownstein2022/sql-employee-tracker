@@ -150,7 +150,7 @@ async function runLogicFromMenu(answers) {
       GROUP BY CONCAT(manager.first_name,' ', manager.last_name), concat(employee.first_name, ' ', employee.last_name), role.title, department.name, role.salary
       ORDER BY CONCAT(manager.first_name,' ', manager.last_name);`;
       return renderTableFromQuery(sqlquery, showMainMenu, menuselectedtext);
-    case "**View Employees By Department**":
+    case "View Employees By Department":
       menuselectedtext = "**View all emloyees by department**";
       sqlquery = `SELECT department.name as department, concat(employee.first_name, ' ', employee.last_name) as employee, role.title as employee_title, role.salary, CONCAT(manager.first_name,' ', manager.last_name) AS manager
       FROM employee 
@@ -166,8 +166,8 @@ async function runLogicFromMenu(answers) {
     //   return deleteRoles();
     // case "Delete Employees":
     //   return deleteEmployees();
-    case "**View Total Utilized Budget (Combined Salaries) of a Department**":
-      menuselectedtext ="View total utilized budget (combined salaries) by department";
+    case "View Total Utilized Budget (Combined Salaries) of a Department":
+      menuselectedtext ="**View total utilized budget (combined salaries) by department**";
       sqlquery = `SELECT department.name as department_name, 
       CONCAT('$', FORMAT(sum(salary), 0)) as 'combined-salaries-by-dept'
      FROM employee 
