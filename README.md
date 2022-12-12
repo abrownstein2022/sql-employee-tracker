@@ -85,16 +85,16 @@ $npm start
 ```
 **Then follow the screenshots below:**
 ```md
-![example image 1 main menu](/assets/images/ch12-screen1-mainmenu.jpg)
-![example image 2 main menu](/assets/images/ch12-screen2-mainmenu.jpg)
-![example image 3 main menu](/assets/images/ch12-screen3-mainmenu.jpg)
-![example image 4 view all employees](/assets/images/ch12-screen4-view-all-emp.jpg)
-![example image 5 view all roles and departments](/assets/images/ch12-screen5-view-all-roles-depts.jpg)
-![example image 6 add employee ](/assets/images/ch12-screen6-add-emp.jpg)
-![example image 7 update employee role](/assets/images/ch12-screen7-upd-emp-role.jpg)
-![example image 8 add department](/assets/images/ch12-screen8-add-dept.jpg)
-![example image 9 add role](/assets/images/ch12-screen9-add-role.jpg)
-![example image 10 3 bonus views](/assets/images/ch12-screen10-bonus-views.jpg)
+![example image 1 main menu](./assets/images/ch12-screen1-mainmenu.jpg)
+![example image 2 main menu](./assets/images/ch12-screen2-mainmenu.jpg)
+![example image 3 main menu](./assets/images/ch12-screen3-mainmenu.jpg)
+![example image 4 view all employees](./assets/images/ch12-screen4-view-all-emp.jpg)
+![example image 5 view all roles and departments](./assets/images/ch12-screen5-view-all-roles-depts.jpg)
+![example image 6 add employee ](./assets/images/ch12-screen6-add-emp.jpg)
+![example image 7 update employee role](./assets/images/ch12-screen7-upd-emp-role.jpg)
+![example image 8 add department](./assets/images/ch12-screen8-add-dept.jpg)
+![example image 9 add role](./assets/images/ch12-screen9-add-role.jpg)
+![example image 10 3 bonus views](./assets/images/ch12-screen10-bonus-views.jpg)
 ```
 
 **Please also review the following demonstration video:**
