@@ -79,7 +79,7 @@ mysql> source db/seeds.sql
 
 ## Usage
 
-To start the application, go to the Terminal and enter what's below:
+To start the application, go to the Terminal and enter the line below:
 ```bash
 $npm start
 ```

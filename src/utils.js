@@ -80,7 +80,8 @@ function validateInput(message) {
 
 //not using promises any longer here: promise must return something so return console.table(results)
 
-async function renderTableFromQuery(sqlquery, showMainMenu) {
+//alexis 12/11/22 remove showMainMenu b/c it refreshes the entire screen so lose menu value just selected
+ async function renderTableFromQuery(sqlquery, showMainMenu) {
   //passes sql code
   //console.log(sqlquery);
   //need db.query after onQueryComplete so it's already defined before db.query executes
