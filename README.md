@@ -151,7 +151,7 @@ _underline_
 Feattures for *future* development
  -->
 **The main features in this project are:**<br>
-1. Uses Node.js, Inqurier, MySQL and npmjs console.table
+1. Uses Node.js, Inquirer, MySQL and npmjs console.table
 1. Example screenshots and a demonstration video
 1. Necessary folder structure 
 1. Professional README
