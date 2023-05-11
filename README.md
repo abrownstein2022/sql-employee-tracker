@@ -1,4 +1,4 @@
-# Challenge Module 12: Employee Tracker Application using Node.js, Inquirer, and MySQL
+# Employee Tracker Application using Node.js, Inquirer, and MySQL
 
 ![license](https://img.shields.io/badge/license-MIT-black)
 
@@ -53,10 +53,10 @@ THEN I am prompted to select an employee to update and their new role and this i
 ## Installation
 <!-- audience is other developers -->
 
-1. Clone this GitHub repo https://github.com/abrownstein2022/ch12-sql-employee-tracker:
+1. Clone this GitHub repo https://github.com/abrownstein2022/sql-employee-tracker:
 <!-- Check out the gh cli tool from github -->
 ```bash
-$ gh repo clone /abrownstein2022/ch12-sql-employee-tracker
+$ gh repo clone /abrownstein2022/sql-employee-tracker
 ```
 
 2. From the terminal, install npm, mysql2, inqurier v8.2.4 and npmjs console.table packages:
@@ -172,6 +172,6 @@ I can be reached at alexis@drdatabase.com.
 
 This GitHub repo can be found at:
   
-https://github.com/abrownstein2022/ch12-sql-employee-tracker
+https://github.com/abrownstein2022/sql-employee-tracker
  
 
